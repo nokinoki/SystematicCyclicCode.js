@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html>
 
@@ -14,19 +14,15 @@
 
     <p>
 
-        <input type="text" id="count"></input>
-
+        情報記号数:<input type="text" id="infolen"></input><br>
+        生成多項式:<input type="text" id="genepoly"></input><br>
         <button id="button">計算</button>
-
-        <button id="left">←</button>
-
-        <button id="right">→</button>
 
     </p>
 
     <p>
         <h4>Console</h4> 
-        <div id="console"></div>
+        <div style="width:90%;margin:5%;padding:5%;background-color:white;"  id="console"></div>
     </p>
 
 </body>
@@ -38,12 +34,35 @@
 <script type="text/javascript" src="SystematicCyclicCode.js"></script>
 
 <script type="text/javascript">
+    
+    document.getElementById("button").onclick = function(){
+        if(null == document.getElementById("infolen").value.match(/[0-9]+/)){
+            alert("情報記号数を正の整数値を入力してください");
+            return;
+        }
+        if(null == document.getElementById("genepoly").value.match(/[01]+/)){
+            alert("生成多項式を0,1の列で入力してください");
+            return;
+        }
+        window.location.href = "index.html?infolen=" + document.getElementById("infolen").value + 
+            "?genepoly=" + document.getElementById("genepoly").value;
+    };
 
+    //Default
     var infoLen = 4;
     var codeLen = 7;
     var genePoly = 0b1011;
     var genePolyDigree = 3;
 
+    var urlParamInfoLen = window.location.href.match(/infolen=([0-9]+)(&[^\/]*)?/);
+    var urlParamGenePoly = window.location.href.match(/genepoly=([01]+)(&[^\/]*)?/);
+    if(urlParamInfoLen.length > 1 && urlParamGenePoly.length > 1){
+        infoLen = ParseInt(urlParamInfoLen[1]);
+        genePoly = ParseInt(urlParamGenePoly[1], 2);
+        genePolyDigree = urlParamGenePoly[1].length - 1;
+        codeLen = infoLen + genePolyDigree;
+    }
+    
     var SCC = new SystematicCyclicCode(infoLen, codeLen, genePoly, genePolyDigree);
     for (var i = 0; i < Math.pow(2, infoLen); i++) {
         var printStr = (SCC.zero + i.toString(2)).slice(-infoLen) + "\t:" + SCC.generateToString(i);
