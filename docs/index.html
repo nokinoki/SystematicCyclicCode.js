@@ -19,6 +19,15 @@
         <button id="button">計算</button>
 
     </p>
+    
+    <p>
+        
+        情報記号数: <span id="a"></span><br>
+        符号長: <span id="b"></span><br>
+        生成多項式: <span id="c"></span><br>
+        生成多項式次数: <span id="d"></span><br>
+        
+    </p>
 
     <p>
         <h4>Console</h4> 
@@ -70,6 +79,12 @@
         console.log(printStr);
         document.getElementById("console").innerHTML += printStr + "<br>\n";
     }
+    
+    document.getElementById("a").innerHTML = infoLen;
+    document.getElementById("b").innerHTML = codeLen;
+    document.getElementById("c").innerHTML = (SCC.zero + genePoly.toString(2)).slice(-(genePolyDigree + 1));
+    document.getElementById("d").innerHTML = genePolyDigree;
+    
 
 </script>
 
