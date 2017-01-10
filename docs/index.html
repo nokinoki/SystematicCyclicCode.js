@@ -67,8 +67,8 @@
     var urlParamInfoLen = window.location.href.match(/infolen=([0-9]+)(&[^\/]*)?/);
     var urlParamGenePoly = window.location.href.match(/genepoly=([01]+)(&[^\/]*)?/);
     if(null != urlParamInfoLen && null != urlParamGenePoly){
-        infoLen = ParseInt(urlParamInfoLen[1]);
-        genePoly = ParseInt(urlParamGenePoly[1], 2);
+        infoLen = parseInt(urlParamInfoLen[1]);
+        genePoly = parseInt(urlParamGenePoly[1], 2);
         genePolyDigree = urlParamGenePoly[1].length - 1;
         codeLen = infoLen + genePolyDigree;
     }
