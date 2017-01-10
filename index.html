@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>SystematicCyclicCode.js</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body style="background-color: lightgray">
+
+    <p>
+
+        <input type="text" id="count"></input>
+
+        <button id="button">計算</button>
+
+        <button id="left">←</button>
+
+        <button id="right">→</button>
+
+    </p>
+
+    <p>
+
+        #Rank of Polynomial: <span id="rank"></span><br>
+
+        #IrreducibleBinaryMonicPolynomial: <span id="result"></span><br>
+
+        <div id="warring"></div>
+
+        <canvas id="canvas" style="" width="500px" height="500px"></canvas>
+
+    </p>
+
+</body>
+
+
+
+
+
+<script type="text/javascript" src="SystematicCyclicCode.js"></script>
+
+<script type="text/javascript">
+
+    var infoLen = 4;
+    var codeLen = 7;
+    var genePoly = 0b1011;
+    var genePolyDigree = 3;
+
+    var SCC = new SystematicCyclicCode(infoLen, codeLen, genePoly, genePolyDigree);
+    for (var i = 0; i < Math.pow(2, infoLen); i++) {
+        console.log((SCC.zero + i.toString(2)).slice(-infoLen) + "\t:" + SCC.generateToString(i));
+    }
+
+</script>
+
+</html>
