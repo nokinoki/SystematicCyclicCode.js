@@ -35,6 +35,12 @@
         <div style="margin:5px,10px;padding:5px;background-color:white;"  id="console"></div>
     </p>
 
+    <p>
+        受信語:<input type="text" id="receive"></input>
+        <button id="button2">復号</button><br>
+        復号語: <span id="e"></span><br>
+    </p>
+
 </body>
 
 
@@ -58,6 +64,16 @@
             "?genepoly=" + document.getElementById("genepoly").value;
     };
 
+    document.getElementById("button2").onclick = function () {
+        if (null == document.getElementById("receive").value.match(/[01]+/)) {
+            alert("受信語を0,1の列で入力してください");
+            return;
+        }
+        var rcv = parseInt(document.getElementById("receive").value, 2);
+        console.log(rcv);
+        document.getElementById("e").innerHTML = SCC.decodeToString(rcv); 
+    };
+
     //Default
     var infoLen = 4;
     var codeLen = 7;
@@ -71,11 +87,11 @@
         genePoly = parseInt(urlParamGenePoly[1], 2);
         genePolyDigree = urlParamGenePoly[1].length - 1;
         codeLen = infoLen + genePolyDigree;
-        document.getElementById("infolen").value = infoLen;
-        document.getElementById("genepoly").value = genePoly;
+        document.getElementById("infolen").value = urlParamInfoLen[1];
+        document.getElementById("genepoly").value = urlParamGenePoly[1];
     }
     
-    var SCC = new SystematicCyclicCode(infoLen, codeLen, genePoly, genePolyDigree);
+    SCC = new SystematicCyclicCode(infoLen, codeLen, genePoly, genePolyDigree);
     for (var i = 0; i < Math.pow(2, infoLen); i++) {
         var printStr = (SCC.zero + i.toString(2)).slice(-infoLen) + "\t:" + SCC.generateToString(i);
         console.log(printStr);
