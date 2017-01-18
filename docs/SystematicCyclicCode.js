@@ -68,7 +68,7 @@ SystematicCyclicCode.prototype.encodeToString = this.generateToString;
 
 SystematicCyclicCode.prototype.decode = function (reciveCode) {
     //シンドロームの計算
-    var syndrome = this.polyDiv(reciveCode, codeLen - 1, genePoly, genePolyDigree);
+    var syndrome = this.polyDiv(reciveCode, codeLen - 1, genePoly, genePolyDigree)[0];
     //エラー箇所の選定
     var error = this.syndrome[syndrome];
 
