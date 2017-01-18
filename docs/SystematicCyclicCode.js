@@ -24,27 +24,27 @@ SystematicCyclicCode = function (infoLen, codeLen, genePoly, genePolyDigree) {
 
 }
 
-//���������Z�̃��[�J�����\�b�h(x/y)
-//x,y�͂��ꂼ�ꃂ�j�b�N������, �Ԃ�l��[��,��]]�̔z��
-//Memo:�Ђ��Z���V�~�����[�g 
+//多項式除算のローカルメソッド(x/y)
+//x,yはそれぞれモニック多項式, 返り値は[商,剰余]の配列
+//Memo:ひっ算をシミュレート 
 SystematicCyclicCode.prototype.polyDiv = function (x, xRank, y, yRank) {
-    //���̊i�[�ϐ�
+    //商の格納変数
     var quotient = 0;
-    //������폙���ɍ��Ō����킹
+    //徐式を被徐式に左で桁合わせ
     y = y << xRank - yRank;
-    //���̏����Ɣ폙�����E�ő����܂Ń��[�v
+    //元の徐式と被徐式が右で揃うまでループ
     for (var i = 0; i <= xRank - yRank; i++) {
-        //���݂̔폙���̍ŏ�ʌ���1�Ȃ犄��
+        //現在の被徐式の最上位桁が1なら割る
         if ((x >> xRank - i) & 1 == 1) {
             x ^= y;
-            quotient += 1;
+            quotient += 1; 
         }
-        //��������E�ɃV�t�g
+        //徐式を一つ右にシフト
         y = y >> 1;
-        //���͈���ɃV�t�g
+        //商は一つ左にシフト
         quotient = quotient << 1;
     }
-    //for�Ō�̗]���ȃV�t�g�𒲐�
+    //for最後の余分なシフトを調整
     quotient = quotient >> 1;
     return [quotient, x];
 }
@@ -67,12 +67,12 @@ SystematicCyclicCode.prototype.encode = this.generate;
 SystematicCyclicCode.prototype.encodeToString = this.generateToString;
 
 SystematicCyclicCode.prototype.decode = function (reciveCode) {
-    //�V���h���[���̌v�Z
+    //シンドロームの計算
     var syndrome = this.polyDiv(reciveCode, codeLen - 1, genePoly, genePolyDigree)[1];
-    //�G���[�ӏ��̑I��
+    //エラー箇所の選定
     var error = this.syndrome[syndrome];
 
-    //�G���[����
+    //エラー訂正
     var sentCode = reciveCode ^ error;
     return sentCode >> genePolyDigree;
 }
