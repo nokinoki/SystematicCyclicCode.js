@@ -71,6 +71,8 @@
         genePoly = parseInt(urlParamGenePoly[1], 2);
         genePolyDigree = urlParamGenePoly[1].length - 1;
         codeLen = infoLen + genePolyDigree;
+        document.getElementById("infolen").value = infoLen;
+        document.getElementById("genepoly").value = genePoly;
     }
     
     var SCC = new SystematicCyclicCode(infoLen, codeLen, genePoly, genePolyDigree);
