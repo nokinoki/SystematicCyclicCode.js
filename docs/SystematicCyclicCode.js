@@ -79,5 +79,5 @@ SystematicCyclicCode.prototype.decode = function (reciveCode) {
 
 SystematicCyclicCode.prototype.decodeToString = function (reciveCode) {
 
-    return (this.zero + this.decode(infoCode).toString(2)).substr(-this.infoLen);
+    return (this.zero + this.decode(reciveCode).toString(2)).substr(-this.infoLen);
 }
