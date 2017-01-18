@@ -15,7 +15,7 @@ SystematicCyclicCode = function (infoLen, codeLen, genePoly, genePolyDigree) {
     //Constructor
     for (var i = 0; i < codeLen; i++) {
         var errorPoly = 1 << i;
-        this.syndrome[this.generate(errorPoly)] = 1 << i;
+        this.syndrome[this.generate(errorPoly) % (1 << genePolyDigree)] = 1 << i;
     }
 
     for (var i = 0; i < this.codeLen; i++) {
@@ -26,7 +26,7 @@ SystematicCyclicCode = function (infoLen, codeLen, genePoly, genePolyDigree) {
 
 //多項式除算のローカルメソッド(x/y)
 //x,yはそれぞれモニック多項式, 返り値は[商,剰余]の配列
-//Memo:ひっ算をシミュレート
+//Memo:ひっ算をシミュレート 
 SystematicCyclicCode.prototype.polyDiv = function (x, xRank, y, yRank) {
     //商の格納変数
     var quotient = 0;
@@ -68,7 +68,7 @@ SystematicCyclicCode.prototype.encodeToString = this.generateToString;
 
 SystematicCyclicCode.prototype.decode = function (reciveCode) {
     //シンドロームの計算
-    var syndrome = this.polyDiv(reciveCode, codeLen - 1, genePoly, genePolyDigree)[0];
+    var syndrome = this.polyDiv(reciveCode, codeLen - 1, genePoly, genePolyDigree)[1];
     //エラー箇所の選定
     var error = this.syndrome[syndrome];
 
