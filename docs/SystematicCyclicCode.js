@@ -15,7 +15,7 @@ SystematicCyclicCode = function (infoLen, codeLen, genePoly, genePolyDigree) {
     //Constructor
     for (var i = 0; i < codeLen; i++) {
         var errorPoly = 1 << i;
-        this.syndrome[polyDiv(errorPoly,this.codeLen-1,this.genePoly,this.genePolyDigree)] = errorPoly;
+        this.syndrome[this.polyDiv(errorPoly,this.codeLen-1,this.genePoly,this.genePolyDigree)[1]] = errorPoly;
     }
 
     for (var i = 0; i < this.codeLen; i++) {
